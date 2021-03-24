@@ -1,28 +1,53 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="form">
+      <h1 class="title">Cоздание клиента</h1>
+      <progressBar :currentStep=currentStep />
+      <step1 @status="stepStatus" v-if="currentStep === 1" />
+      <step2 @status="stepStatus" v-if="currentStep === 2" />
+      <step3 @status="stepStatus" v-if="currentStep === 3" />
+      <success v-if="currentStep === 4" />
+    </div>
+
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import progressBar from "@/components/progressBar";
+
+import step1 from "@/components/step1";
+import step2 from "@/components/step2";
+import step3 from "@/components/step3";
+
+import success from "@/components/success";
 
 export default {
   name: 'App',
+  data: () => {
+    return {
+      currentStep: 1,
+    }
+  },
   components: {
-    HelloWorld
+    progressBar,
+    step1,
+    step2,
+    step3,
+    success
+  },
+  methods: {
+    stepStatus (value) {
+      if (value){
+        this.$data.currentStep++;
+      }
+    }
   }
+
+
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+  @import "assets/style.sass"
 </style>
